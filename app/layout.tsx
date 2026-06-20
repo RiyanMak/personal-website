@@ -9,8 +9,20 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://riyanmaknojia.com"),
-  title: "Riyan Maknojia",
-  description: "CS Student | Full-Stack Developer | ML Enthusiast",
+  title: "Riyan Maknojia — CS Student & Full-Stack Developer",
+  description:
+    "Riyan Maknojia is a CS student at UT Dallas focused on machine learning, full-stack development, and systems. Building things that work in production.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "Riyan Maknojia — CS Student & Full-Stack Developer",
+    description:
+      "CS student at UT Dallas. Full-Stack Developer and ML Enthusiast.",
+    url: "https://riyanmaknojia.com",
+    siteName: "Riyan Maknojia",
+    type: "website",
+  },
 };
 
 const personJsonLd = {
@@ -24,6 +36,12 @@ const personJsonLd = {
     "@type": "CollegeOrUniversity",
     name: "University of Texas at Dallas",
   },
+  knowsAbout: [
+    "Machine Learning",
+    "Full-Stack Development",
+    "Software Engineering",
+    "Artificial Intelligence",
+  ],
   sameAs: [
     "https://github.com/RiyanMak",
     "https://www.linkedin.com/in/riyan-maknojia/",
