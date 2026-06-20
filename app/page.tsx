@@ -5,6 +5,7 @@ import {
   SiPython, SiCplusplus, SiJavascript, SiTypescript,
   SiReact, SiFigma, SiHtml5, SiCss,
   SiGit, SiGithub, SiDocker, SiFlask, SiJupyter,
+  SiGo, SiNodedotjs, SiLinux, SiRedis, SiPostgresql,
 } from 'react-icons/si'
 import { FaJava, FaAws } from 'react-icons/fa'
 
@@ -48,22 +49,28 @@ const ACHIEVEMENTS = [
 ]
 
 const SKILLS = [
-  { id: 'python',  name: 'Python',     icon: <SiPython size={28} />,     color: '#3776ab', exp: '3 yrs', about: 'First language I learned — unlocked ML and scripting for me.', applied: 'YOLO object detection pipeline, Flask APIs, data analysis scripts.', projects: ['YOLO', 'HeadAI', 'Eng-Physics'] },
-  { id: 'ts',      name: 'TypeScript', icon: <SiTypescript size={28} />, color: '#3178c6', exp: '1 yr',  about: 'Type safety and confidence at scale — no more runtime surprises.', applied: 'Full-stack Next.js apps, BSG microservices frontend.', projects: ['BSG', 'HerHope', 'Personal Website'] },
-  { id: 'js',      name: 'JavaScript', icon: <SiJavascript size={28} />, color: '#f7df1e', exp: '2 yrs', about: 'Powers most of my web projects front to back.', applied: 'REST API integrations, interactive UIs, Node.js tooling.', projects: ['CodeEvolve', 'UTD Hackathon'] },
-  { id: 'cpp',     name: 'C++',        icon: <SiCplusplus size={28} />,  color: '#00599c', exp: '2 yrs', about: 'Sharpened my understanding of memory management and performance.', applied: 'DSA coursework, competitive programming, systems-level projects.', projects: ['DSA Projects', 'UNIX Assignments'] },
-  { id: 'java',    name: 'Java',       icon: <FaJava size={28} />,       color: '#f89820', exp: '2 yrs', about: 'Solid OOP foundation — design patterns clicked for me here.', applied: 'Backend services, university algorithms coursework.', projects: ['DSA Project 1', 'Backend APIs'] },
-  { id: 'bash',    name: 'Bash',       icon: <span className="font-bold text-xl" style={{ color: '#4eaa25' }}>$_</span>, color: '#4eaa25', exp: '2 yrs', about: 'Daily driver for automating repetitive dev tasks.', applied: 'Build automation, file processing, environment setup scripts.', projects: ['Dev Automation', 'Server Setup'] },
-  { id: 'react',   name: 'React',      icon: <SiReact size={28} />,      color: '#61dafb', exp: '1.5 yrs', about: 'Changed how I think about UI — composable and declarative.', applied: 'Component-driven frontends with hooks, context, and RSC.', projects: ['HerHope', 'Personal Website', 'CodeEvolve'] },
-  { id: 'html',    name: 'HTML5',      icon: <SiHtml5 size={28} />,      color: '#e34f26', exp: '3 yrs', about: 'Semantic markup and accessibility fundamentals.', applied: 'Every web project — the foundation of all frontends I\'ve built.', projects: ['All Web Projects'] },
-  { id: 'css',     name: 'CSS',        icon: <SiCss size={28} />,        color: '#1572b6', exp: '3 yrs', about: 'Layouts, animations, responsive design — the craft of presentation.', applied: 'Tailwind CSS and vanilla CSS across all my projects.', projects: ['Personal Website', 'HerHope', 'AustinCS'] },
-  { id: 'figma',   name: 'Figma',      icon: <SiFigma size={28} />,      color: '#f24e1e', exp: '1 yr',  about: 'Bridges design and dev — I mock before I code.', applied: 'Wireframes and high-fidelity mockups for hackathon projects.', projects: ['Neurocam UI', 'Hackathon Designs'] },
-  { id: 'flask',   name: 'Flask',      icon: <SiFlask size={28} />,      color: '#e8e8e8', exp: '1.5 yrs', about: 'My go-to for fast, lightweight Python web APIs.', applied: 'ML model serving endpoints and REST APIs.', projects: ['YOLO API', 'HeadAI', 'Area Calculator'] },
-  { id: 'docker',  name: 'Docker',     icon: <SiDocker size={28} />,     color: '#2496ed', exp: '1 yr',  about: '"Works on my machine" stopped being a problem.', applied: 'Containerized microservices across dev and prod environments.', projects: ['BSG', 'YOLO'] },
-  { id: 'aws',     name: 'AWS',        icon: <FaAws size={28} />,        color: '#ff9900', exp: '1 yr',  about: 'Cloud infrastructure and scalable deployments.', applied: 'S3, EC2, Lambda for hosting and deploying ML-backed apps.', projects: ['HerHope', 'Neurocam'] },
-  { id: 'git',     name: 'Git',        icon: <SiGit size={28} />,        color: '#f05032', exp: '3 yrs', about: 'Fundamental to how I collaborate and version everything.', applied: 'Branch strategies, PRs, and team workflows on every project.', projects: ['All Projects'] },
-  { id: 'github',  name: 'GitHub',     icon: <SiGithub size={28} />,     color: '#e8e8e8', exp: '3 yrs', about: 'Where all my work lives — open source and collaborative.', applied: 'Project hosting, CI/CD pipelines, open source contributions.', projects: ['All Projects'] },
-  { id: 'jupyter', name: 'Jupyter',    icon: <SiJupyter size={28} />,    color: '#f37626', exp: '2 yrs', about: 'My lab for ML experimentation and data exploration.', applied: 'Exploratory data analysis, model training, research notebooks.', projects: ['YOLO', 'Eng-Physics', 'HeadAI'] },
+  { id: 'python',  name: 'Python',     icon: <SiPython size={28} />,     color: '#3776ab', exp: '3 yrs', about: 'First language I learned — unlocked ML and scripting for me.', applied: 'Built the YOLO visual navigation system, HerHope RAG Q&A backend, and HeadAI multi-model orchestrator with Flask APIs.', projects: ['YOLO', 'HerHope', 'HeadAI'] },
+  { id: 'go',      name: 'Go',         icon: <SiGo size={28} />,         color: '#00add8', exp: '1 yr',  about: 'Go\'s simplicity and concurrency model made it perfect for building fast microservices.', applied: 'Built the central, RTC, and worker microservices for BSG — a real-time collaborative coding platform.', projects: ['BSG'] },
+  { id: 'ts',      name: 'TypeScript', icon: <SiTypescript size={28} />, color: '#3178c6', exp: '1 yr',  about: 'Type safety and confidence at scale — no more runtime surprises.', applied: 'Full-stack development for BSG collaborative coding platform, HerHope RAG system, and this portfolio.', projects: ['BSG', 'HerHope', 'Personal Website'] },
+  { id: 'js',      name: 'JavaScript', icon: <SiJavascript size={28} />, color: '#f7df1e', exp: '2 yrs', about: 'Powers most of my web projects front to back.', applied: 'Interactive frontends and REST API integrations — also used Node.js for backend tooling and scripting.', projects: ['CodeEvolve', 'Personal Website'] },
+  { id: 'cpp',     name: 'C++',        icon: <SiCplusplus size={28} />,  color: '#00599c', exp: '2 yrs', about: 'Sharpened my understanding of memory management and performance.', applied: 'DSA coursework, competitive programming, and systems-level assignments at UT Dallas.', projects: ['DSA Projects', 'UNIX Assignments'] },
+  { id: 'c',       name: 'C',          icon: <span className="font-bold" style={{ fontSize: 26, color: '#a8b9cc', fontFamily: 'monospace' }}>C</span>, color: '#a8b9cc', exp: '1.5 yrs', about: 'C gave me a true understanding of how programs interact with hardware and memory.', applied: 'Systems programming coursework, pointers and memory management, OS-level project work at UT Dallas.', projects: ['Systems Projects', 'OS Coursework'] },
+  { id: 'java',    name: 'Java',       icon: <FaJava size={28} />,       color: '#f89820', exp: '2 yrs', about: 'Solid OOP foundation — design patterns clicked for me here.', applied: 'Backend services, university algorithms and data structures coursework.', projects: ['DSA Projects', 'Backend APIs'] },
+  { id: 'node',    name: 'Node.js',    icon: <SiNodedotjs size={28} />,  color: '#339933', exp: '1.5 yrs', about: 'Brought JavaScript to the server — unified my full-stack thinking.', applied: 'Backend API development and tooling for web projects, package management, and build pipelines.', projects: ['CodeEvolve', 'BSG'] },
+  { id: 'sql',     name: 'SQL',        icon: <SiPostgresql size={28} />, color: '#336791', exp: '1.5 yrs', about: 'Relational databases and query optimization are at the core of most real apps.', applied: 'Designed schemas and wrote queries for backend services; used PostgreSQL in BSG microservices.', projects: ['BSG', 'Backend Services'] },
+  { id: 'linux',   name: 'Linux',      icon: <SiLinux size={28} />,      color: '#fcc624', exp: '2 yrs', about: 'Linux is my home — the environment where everything actually runs.', applied: 'Daily dev environment, SSH server setup, and deployment for YOLO GPU training on H100 clusters.', projects: ['YOLO', 'BSG', 'Dev Environment'] },
+  { id: 'redis',   name: 'Redis',      icon: <SiRedis size={28} />,      color: '#ff4438', exp: '1 yr',  about: 'Fast in-memory caching that makes real-time systems actually feel real-time.', applied: 'Session management and pub/sub for real-time room state in BSG microservices.', projects: ['BSG'] },
+  { id: 'bash',    name: 'Bash',       icon: <span className="font-bold text-xl" style={{ color: '#4eaa25' }}>$_</span>, color: '#4eaa25', exp: '2 yrs', about: 'Daily driver for automating repetitive dev tasks.', applied: 'Build automation, deployment scripts, and environment setup for YOLO GPU training jobs.', projects: ['YOLO', 'Dev Automation'] },
+  { id: 'react',   name: 'React',      icon: <SiReact size={28} />,      color: '#61dafb', exp: '1.5 yrs', about: 'Changed how I think about UI — composable and declarative.', applied: 'Component-driven frontends for HerHope (hackathon RAG app) and this portfolio site.', projects: ['HerHope', 'Personal Website'] },
+  { id: 'html',    name: 'HTML5',      icon: <SiHtml5 size={28} />,      color: '#e34f26', exp: '3 yrs', about: 'Semantic markup and accessibility fundamentals.', applied: 'Foundation of every web project I\'ve built — from HerHope to this portfolio.', projects: ['HerHope', 'Personal Website', 'CodeEvolve'] },
+  { id: 'css',     name: 'CSS',        icon: <SiCss size={28} />,        color: '#1572b6', exp: '3 yrs', about: 'Layouts, animations, responsive design — the craft of presentation.', applied: 'Tailwind CSS for this portfolio and HerHope; vanilla CSS for hackathon and course projects.', projects: ['Personal Website', 'HerHope'] },
+  { id: 'figma',   name: 'Figma',      icon: <SiFigma size={28} />,      color: '#f24e1e', exp: '1 yr',  about: 'Bridges design and dev — I mock before I code.', applied: 'Wireframes and high-fidelity mockups for Neurocam UI and hackathon project pitches.', projects: ['Neurocam UI', 'Hackathon Designs'] },
+  { id: 'flask',   name: 'Flask',      icon: <SiFlask size={28} />,      color: '#e8e8e8', exp: '1.5 yrs', about: 'My go-to for fast, lightweight Python web APIs.', applied: 'ML model serving endpoints for YOLO navigation system and HeadAI orchestration API.', projects: ['YOLO', 'HeadAI'] },
+  { id: 'docker',  name: 'Docker',     icon: <SiDocker size={28} />,     color: '#2496ed', exp: '1 yr',  about: '"Works on my machine" stopped being a problem.', applied: 'Containerized all three BSG microservices (central, RTC, worker) and the YOLO inference pipeline.', projects: ['BSG', 'YOLO'] },
+  { id: 'aws',     name: 'AWS',        icon: <FaAws size={28} />,        color: '#ff9900', exp: '1 yr',  about: 'Cloud infrastructure and scalable deployments.', applied: 'S3 for HerHope data storage, EC2 for deploying ML-backed Flask APIs, Lambda for serverless endpoints.', projects: ['HerHope', 'YOLO'] },
+  { id: 'git',     name: 'Git',        icon: <SiGit size={28} />,        color: '#f05032', exp: '3 yrs', about: 'Fundamental to how I collaborate and version everything.', applied: 'Branch strategies, PRs, and team workflows across BSG, HerHope, YOLO, and HeadAI.', projects: ['All Projects'] },
+  { id: 'github',  name: 'GitHub',     icon: <SiGithub size={28} />,     color: '#e8e8e8', exp: '3 yrs', about: 'Where all my work lives — open source and collaborative.', applied: 'Project hosting, CI/CD pipelines, and open source contributions for all active projects.', projects: ['All Projects'] },
+  { id: 'jupyter', name: 'Jupyter',    icon: <SiJupyter size={28} />,    color: '#f37626', exp: '2 yrs', about: 'My lab for ML experimentation and data exploration.', applied: 'Training notebooks for YOLO scene graph model and HeadAI embedding experiments.', projects: ['YOLO', 'HeadAI'] },
 ]
 
 const PROJECTS = [
@@ -240,6 +247,8 @@ export default function Home() {
             className="font-mono text-xs text-[#1a0f0d] hover:text-white transition-colors">LinkedIn ↗</a>
           <a href="https://github.com/RiyanMak" target="_blank" rel="noopener noreferrer"
             className="font-mono text-xs text-[#1a0f0d] hover:text-white transition-colors">GitHub ↗</a>
+          <a href="/resume.pdf" target="_blank" rel="noopener noreferrer"
+            className="font-mono text-xs px-3 py-1 rounded-full border border-[#1a0f0d] text-[#1a0f0d] hover:bg-[#1a0f0d] hover:text-white transition-all">Resume ↗</a>
         </div>
 
         {/* Mobile: hamburger */}
@@ -270,6 +279,8 @@ export default function Home() {
               className="font-mono text-xs text-white/60">LinkedIn ↗</a>
             <a href="https://github.com/RiyanMak" target="_blank" rel="noopener noreferrer"
               className="font-mono text-xs text-white/60">GitHub ↗</a>
+            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer"
+              className="font-mono text-xs text-[#C97B6E]">Resume ↗</a>
           </div>
         </div>
       )}
@@ -473,6 +484,13 @@ export default function Home() {
                     {c.label} ↗
                   </a>
                 ))}
+                <a href="/resume.pdf" target="_blank" rel="noopener noreferrer"
+                  className="font-mono text-sm px-6 py-3 rounded-xl border w-full transition-all duration-200 text-center"
+                  style={{ borderColor: '#C97B6E55', color: '#C97B6E', background: '#111' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = '#C97B6E'; e.currentTarget.style.background = '#C97B6E15' }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = '#C97B6E55'; e.currentTarget.style.background = '#111' }}>
+                  View Resume ↗
+                </a>
               </div>
             </div>
           </section>
