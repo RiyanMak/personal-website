@@ -260,7 +260,7 @@ export default function Home() {
                   {[
                     { label: 'Education',   value: 'BS Computer Science @ UT Dallas' },
                     { label: 'Focus',        value: 'AI/ML · Full-Stack · Systems' },
-                    { label: 'Activities',   value: 'AIS · ACM Research · Riverhacks · ACC CS Club VP' },
+                    { label: 'Activities',   value: 'AIS · ACM Research · ACM Development · Riverhacks · ACC CS Club VP' },
                     { label: 'Looking for',  value: 'Internships & research roles' },
                   ].map(item => (
                     <div key={item.label} className="flex items-start gap-4">
