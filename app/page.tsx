@@ -75,20 +75,24 @@ const PROJECTS = [
 
 // ─── Skills Section ────────────────────────────────────────────────────────────
 
-function SkillsSection() {
+function SkillsSection({ sectionStyle }: { sectionStyle: React.CSSProperties }) {
   const [selected, setSelected] = useState(SKILLS[0])
 
   return (
-    <section className="h-full flex items-center justify-center px-12" style={{ scrollSnapAlign: 'start' }}>
-      <div className="w-full max-w-4xl flex gap-8">
+    <section
+      className="flex items-start md:items-center justify-center px-6 md:px-12 py-12 md:py-0"
+      style={sectionStyle}
+      data-section
+    >
+      <div className="w-full max-w-4xl flex flex-col md:flex-row gap-6 md:gap-8">
 
         {/* Left: icon grid */}
-        <div className="w-[38%] shrink-0">
+        <div className="md:w-[38%] shrink-0">
           <p className="font-mono text-xs tracking-widest uppercase mb-4" style={{ color: '#C97B6E' }}>03 / skills</p>
-          <div className="grid grid-cols-4 gap-2">
+          <div className="grid grid-cols-5 md:grid-cols-4 gap-2">
             {SKILLS.map(s => (
               <button key={s.id} onClick={() => setSelected(s)} title={s.name}
-                className="flex items-center justify-center p-3 rounded-xl border transition-all duration-200"
+                className="flex items-center justify-center p-2 md:p-3 rounded-xl border transition-all duration-200"
                 style={{
                   color: s.color,
                   background: selected.id === s.id ? '#1a1a1a' : 'transparent',
@@ -101,8 +105,8 @@ function SkillsSection() {
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="flex items-center">
+        {/* Divider — desktop only */}
+        <div className="hidden md:flex items-center">
           <div className="w-px h-72" style={{ background: 'linear-gradient(to bottom, transparent, #222, transparent)' }} />
         </div>
 
@@ -151,13 +155,29 @@ function SkillsSection() {
 export default function Home() {
   const scrollRef = useRef<HTMLDivElement>(null)
   const [current, setCurrent] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   const scrollTo = useCallback((idx: number) => {
     const el = scrollRef.current
     if (!el) return
-    el.scrollTo({ top: idx * el.clientHeight, behavior: 'smooth' })
+    if (isMobile) {
+      const sections = el.querySelectorAll('[data-section]')
+      const section = sections[idx] as HTMLElement
+      if (section) el.scrollTo({ top: section.offsetTop, behavior: 'smooth' })
+    } else {
+      el.scrollTo({ top: idx * el.clientHeight, behavior: 'smooth' })
+    }
     setCurrent(idx)
-  }, [])
+    setMenuOpen(false)
+  }, [isMobile])
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -171,10 +191,26 @@ export default function Home() {
   useEffect(() => {
     const el = scrollRef.current
     if (!el) return
-    const onScroll = () => setCurrent(Math.round(el.scrollTop / el.clientHeight))
+    const onScroll = () => {
+      if (isMobile) {
+        const sections = el.querySelectorAll('[data-section]')
+        let found = 0
+        sections.forEach((section, i) => {
+          const s = section as HTMLElement
+          if (s.offsetTop <= el.scrollTop + el.clientHeight / 3) found = i
+        })
+        setCurrent(found)
+      } else {
+        setCurrent(Math.round(el.scrollTop / el.clientHeight))
+      }
+    }
     el.addEventListener('scroll', onScroll, { passive: true })
     return () => el.removeEventListener('scroll', onScroll)
-  }, [])
+  }, [isMobile])
+
+  const sectionStyle: React.CSSProperties = isMobile
+    ? { minHeight: '100%' }
+    : { height: '100%', scrollSnapAlign: 'start' }
 
   return (
     <div className="h-screen flex flex-col gap-2 p-3 bg-[#C97B6E]">
@@ -185,7 +221,9 @@ export default function Home() {
           <div className="font-mono font-bold text-[#1a0f0d] text-sm tracking-tight">Riyan Maknojia</div>
           <div className="font-mono text-[#7a3f35] text-xs">CS Student</div>
         </div>
-        <div className="flex-1 flex justify-center">
+
+        {/* Desktop: pill nav */}
+        <div className="hidden md:flex flex-1 justify-center">
           <div className="bg-[#1a1212]/80 backdrop-blur-sm rounded-full px-1 py-1 flex gap-0.5">
             {NAV.map((s, i) => (
               <button key={s} onClick={() => scrollTo(i)}
@@ -197,20 +235,51 @@ export default function Home() {
             ))}
           </div>
         </div>
-        <div className="flex items-center gap-5">
+        <div className="hidden md:flex items-center gap-5">
           <a href="https://www.linkedin.com/in/riyan-maknojia/" target="_blank" rel="noopener noreferrer"
             className="font-mono text-xs text-[#1a0f0d] hover:text-white transition-colors">LinkedIn ↗</a>
           <a href="https://github.com/RiyanMak" target="_blank" rel="noopener noreferrer"
             className="font-mono text-xs text-[#1a0f0d] hover:text-white transition-colors">GitHub ↗</a>
         </div>
+
+        {/* Mobile: hamburger */}
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="md:hidden ml-auto flex flex-col justify-center gap-1.5 p-2"
+          aria-label="Toggle menu"
+        >
+          <span className={`block w-5 h-0.5 bg-[#1a0f0d] origin-center transition-all duration-200 ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+          <span className={`block w-5 h-0.5 bg-[#1a0f0d] transition-all duration-200 ${menuOpen ? 'opacity-0' : ''}`} />
+          <span className={`block w-5 h-0.5 bg-[#1a0f0d] origin-center transition-all duration-200 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+        </button>
       </nav>
 
+      {/* Mobile dropdown */}
+      {menuOpen && (
+        <div className="md:hidden bg-[#1a1212]/95 backdrop-blur-sm rounded-xl px-3 py-2 flex flex-col gap-0.5 shrink-0 z-50">
+          {NAV.map((s, i) => (
+            <button key={s} onClick={() => scrollTo(i)}
+              className={`text-left px-3 py-2 rounded-lg text-sm font-mono capitalize transition-all duration-200 ${
+                current === i ? 'bg-[#C97B6E] text-[#1a0f0d] font-semibold' : 'text-white/60'
+              }`}>
+              {s}
+            </button>
+          ))}
+          <div className="flex gap-4 px-3 pt-2 mt-1 border-t border-white/10">
+            <a href="https://www.linkedin.com/in/riyan-maknojia/" target="_blank" rel="noopener noreferrer"
+              className="font-mono text-xs text-white/60">LinkedIn ↗</a>
+            <a href="https://github.com/RiyanMak" target="_blank" rel="noopener noreferrer"
+              className="font-mono text-xs text-white/60">GitHub ↗</a>
+          </div>
+        </div>
+      )}
+
       {/* ── Dark window ── */}
-      <div className="relative flex-1 rounded-2xl overflow-hidden bg-[#0e0e0e]">
+      <div className="relative flex-1 rounded-2xl overflow-hidden bg-[#0e0e0e] min-h-0">
         <BinaryBackground />
 
-        {/* Side dots */}
-        <div className="absolute right-5 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-50">
+        {/* Side dots — desktop only */}
+        <div className="hidden md:flex absolute right-5 top-1/2 -translate-y-1/2 flex-col gap-3 z-50">
           {NAV.map((s, i) => (
             <button key={s} onClick={() => scrollTo(i)} title={s} className="flex items-center justify-center w-4 h-4 group">
               <span
@@ -222,13 +291,17 @@ export default function Home() {
         </div>
 
         <div ref={scrollRef} className="h-full overflow-y-scroll no-scrollbar relative z-10"
-          style={{ scrollSnapType: 'y mandatory' }}>
+          style={{ scrollSnapType: isMobile ? 'none' : 'y mandatory' }}>
 
           {/* ── 00 HOME ── */}
-          <section className="h-full flex flex-col justify-center px-16 relative" style={{ scrollSnapAlign: 'start' }}>
+          <section
+            className="flex flex-col justify-center px-8 md:px-16 py-20 md:py-0 relative"
+            style={sectionStyle}
+            data-section
+          >
             <p className="font-mono text-xs tracking-widest uppercase mb-6" style={{ color: '#a6e3a1' }}>~/riyan $</p>
             <h1 className="font-mono font-bold leading-none text-white mb-8"
-              style={{ fontSize: 'clamp(2.8rem, 6vw, 5.5rem)' }}>
+              style={{ fontSize: 'clamp(2.4rem, 7vw, 5.5rem)' }}>
               I write code,<br />
               ship fast &<br />
               <span className="italic" style={{ color: '#C97B6E' }}>think in systems.</span>
@@ -236,27 +309,33 @@ export default function Home() {
             <p className="font-mono text-sm leading-relaxed max-w-xs" style={{ color: '#555' }}>
               CS Student at UT Dallas<br />Full-Stack Developer · ML Enthusiast
             </p>
-            <button onClick={() => scrollTo(1)} className="absolute bottom-8 left-1/2 -translate-x-1/2 font-mono text-base transition-colors animate-bounce"
+            <button onClick={() => scrollTo(1)}
+              className="mt-12 md:mt-0 md:absolute md:bottom-8 md:left-1/2 md:-translate-x-1/2 self-center font-mono text-base transition-colors animate-bounce"
               style={{ color: '#a6e3a1', animationDuration: '2s' }}>↓</button>
           </section>
 
           {/* ── 01 ABOUT ── */}
-          <section className="h-full flex items-center justify-center px-12" style={{ scrollSnapAlign: 'start' }}>
+          <section
+            className="flex items-start md:items-center justify-center px-6 md:px-12 py-12 md:py-0"
+            style={sectionStyle}
+            data-section
+          >
             <div className="w-full max-w-4xl">
-              <p className="font-mono text-xs tracking-widest uppercase mb-10" style={{ color: '#C97B6E' }}>01 / about</p>
-              <div className="grid grid-cols-5 gap-12 items-start">
-                <div className="col-span-2">
-                  <h2 className="font-mono font-bold text-white leading-none mb-4" style={{ fontSize: '2.8rem' }}>
+              <p className="font-mono text-xs tracking-widest uppercase mb-8 md:mb-10" style={{ color: '#C97B6E' }}>01 / about</p>
+              <div className="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-12 items-start">
+                <div className="md:col-span-2">
+                  <h2 className="font-mono font-bold text-white leading-none mb-4"
+                    style={{ fontSize: 'clamp(2rem, 5vw, 2.8rem)' }}>
                     Riyan<br />Maknojia
                   </h2>
                   <p className="font-mono text-sm leading-relaxed" style={{ color: '#666' }}>
                     Building at the intersection of ML, systems, and full-stack engineering. Passionate about shipping things that actually work in prod.
                   </p>
                 </div>
-                <div className="col-span-1 flex justify-center pt-2">
+                <div className="hidden md:col-span-1 md:flex justify-center pt-2">
                   <div className="w-px h-52" style={{ background: 'linear-gradient(to bottom, transparent, #2a2a2a, transparent)' }} />
                 </div>
-                <div className="col-span-2 space-y-5">
+                <div className="md:col-span-2 space-y-5">
                   {[
                     { label: 'Education',   value: 'BS Computer Science @ UT Dallas' },
                     { label: 'Focus',        value: 'AI/ML · Full-Stack · Systems' },
@@ -277,27 +356,29 @@ export default function Home() {
           </section>
 
           {/* ── 02 ACHIEVEMENTS ── */}
-          <section className="h-full flex items-center justify-center px-12" style={{ scrollSnapAlign: 'start' }}>
+          <section
+            className="flex items-start md:items-center justify-center px-6 md:px-12 py-12 md:py-0"
+            style={sectionStyle}
+            data-section
+          >
             <div className="w-full max-w-5xl">
               <p className="font-mono text-xs tracking-widest uppercase mb-6" style={{ color: '#C97B6E' }}>02 / achievements</p>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {ACHIEVEMENTS.map((a, i) => (
                   <div key={i}
-                    className="rounded-xl border p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 group"
-                    style={{ borderColor: '#1e1e1e', background: '#0e0e0e', minHeight: '200px' }}
+                    className="rounded-xl border p-5 md:p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 group"
+                    style={{ borderColor: '#1e1e1e', background: '#0e0e0e', minHeight: '180px' }}
                     onMouseEnter={e => (e.currentTarget.style.borderColor = '#a6e3a155')}
                     onMouseLeave={e => (e.currentTarget.style.borderColor = '#1e1e1e')}>
 
-                    {/* Tag + period */}
                     <div className="flex items-center justify-between mb-4">
-                      <span className="font-mono text-xs uppercase tracking-widest" style={{ color: '#C97B6E' }}>{a.tag}</span>
-                      <span className="font-mono text-xs" style={{ color: '#2a2a2a' }}>{a.period}</span>
+                      <span className="font-mono text-xs uppercase tracking-widest leading-tight" style={{ color: '#C97B6E' }}>{a.tag}</span>
+                      <span className="font-mono text-xs ml-2 shrink-0" style={{ color: '#2a2a2a' }}>{a.period}</span>
                     </div>
 
-                    {/* Big stat */}
                     <div className="flex items-end gap-1 mb-1">
                       <span className="font-mono font-bold leading-none text-white"
-                        style={{ fontSize: 'clamp(3rem, 6vw, 5rem)' }}>
+                        style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)' }}>
                         {a.stat}
                       </span>
                       {a.unit && (
@@ -308,11 +389,9 @@ export default function Home() {
                     </div>
                     <div className="font-mono text-xs mb-4" style={{ color: '#444' }}>{a.label}</div>
 
-                    {/* Divider */}
                     <div className="w-8 mb-4 transition-all duration-300 group-hover:w-16"
                       style={{ height: '1px', background: '#a6e3a1' }} />
 
-                    {/* Title + desc */}
                     <div className="font-mono font-bold text-white text-sm mb-2">{a.title}</div>
                     <p className="font-mono text-xs leading-relaxed" style={{ color: '#555' }}>{a.desc}</p>
 
@@ -323,13 +402,17 @@ export default function Home() {
           </section>
 
           {/* ── 03 SKILLS ── */}
-          <SkillsSection />
+          <SkillsSection sectionStyle={sectionStyle} />
 
           {/* ── 04 PROJECTS ── */}
-          <section className="h-full flex items-center justify-center px-12" style={{ scrollSnapAlign: 'start' }}>
+          <section
+            className="flex items-start md:items-center justify-center px-6 md:px-12 py-12 md:py-0"
+            style={sectionStyle}
+            data-section
+          >
             <div className="w-full max-w-3xl">
               <p className="font-mono text-xs tracking-widest uppercase mb-6" style={{ color: '#C97B6E' }}>04 / projects</p>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {PROJECTS.map(p => (
                   <a key={p.name} href={p.href} target="_blank" rel="noopener noreferrer"
                     className="group block p-5 rounded-xl border transition-all duration-200 hover:-translate-y-0.5"
@@ -362,8 +445,12 @@ export default function Home() {
             </div>
           </section>
 
-          {/* ── 04 CONTACT ── */}
-          <section className="h-full flex items-center justify-center px-12" style={{ scrollSnapAlign: 'start' }}>
+          {/* ── 05 CONTACT ── */}
+          <section
+            className="flex items-center justify-center px-6 md:px-12 py-16 md:py-0"
+            style={sectionStyle}
+            data-section
+          >
             <div className="w-full max-w-lg text-center">
               <p className="font-mono text-xs tracking-widest uppercase mb-8" style={{ color: '#C97B6E' }}>05 / contact</p>
               <h2 className="font-mono font-bold text-white mb-3" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', lineHeight: 1 }}>
