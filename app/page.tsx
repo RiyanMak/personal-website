@@ -225,8 +225,8 @@ export default function Home() {
       {/* ── Nav ── */}
       <nav className="flex items-center shrink-0 px-1">
         <div>
-          <div className="font-mono font-bold text-[#1a0f0d] text-sm tracking-tight">Riyan Maknojia</div>
-          <div className="font-mono text-[#7a3f35] text-xs">CS Student</div>
+          <div className="font-mono font-bold text-[#1a0f0d] text-base tracking-tight">Riyan Maknojia</div>
+          <div className="font-mono text-[#7a3f35] text-sm">CS Student</div>
         </div>
 
         {/* Desktop: pill nav */}
@@ -234,7 +234,7 @@ export default function Home() {
           <div className="bg-[#1a1212]/80 backdrop-blur-sm rounded-full px-1 py-1 flex gap-0.5">
             {NAV.map((s, i) => (
               <button key={s} onClick={() => scrollTo(i)}
-                className={`px-4 py-1.5 rounded-full text-xs font-mono capitalize transition-all duration-200 ${
+                className={`px-4 py-1.5 rounded-full text-sm font-mono capitalize transition-all duration-200 ${
                   current === i ? 'bg-[#C97B6E] text-[#1a0f0d] font-semibold' : 'text-white/60 hover:text-white'
                 }`}>
                 {s}
@@ -244,11 +244,11 @@ export default function Home() {
         </div>
         <div className="hidden md:flex items-center gap-5">
           <a href="https://www.linkedin.com/in/riyan-maknojia/" target="_blank" rel="noopener noreferrer"
-            className="font-mono text-xs text-[#1a0f0d] hover:text-white transition-colors">LinkedIn ↗</a>
+            className="font-mono text-sm font-bold text-[#1a0f0d] hover:text-white transition-colors">LinkedIn ↗</a>
           <a href="https://github.com/RiyanMak" target="_blank" rel="noopener noreferrer"
-            className="font-mono text-xs text-[#1a0f0d] hover:text-white transition-colors">GitHub ↗</a>
+            className="font-mono text-sm font-bold text-[#1a0f0d] hover:text-white transition-colors">GitHub ↗</a>
           <a href="/resume.pdf" target="_blank" rel="noopener noreferrer"
-            className="font-mono text-xs px-3 py-1 rounded-full border border-[#1a0f0d] text-[#1a0f0d] hover:bg-[#1a0f0d] hover:text-white transition-all">Resume ↗</a>
+            className="font-mono text-sm font-bold px-3 py-1 rounded-full border border-[#1a0f0d] text-[#1a0f0d] hover:bg-[#1a0f0d] hover:text-white transition-all">Resume ↗</a>
         </div>
 
         {/* Mobile: hamburger */}
@@ -268,7 +268,7 @@ export default function Home() {
         <div className="md:hidden bg-[#1a1212]/95 backdrop-blur-sm rounded-xl px-3 py-2 flex flex-col gap-0.5 shrink-0 z-50">
           {NAV.map((s, i) => (
             <button key={s} onClick={() => scrollTo(i)}
-              className={`text-left px-3 py-2 rounded-lg text-sm font-mono capitalize transition-all duration-200 ${
+              className={`text-left px-3 py-2 rounded-lg text-base font-mono capitalize transition-all duration-200 ${
                 current === i ? 'bg-[#C97B6E] text-[#1a0f0d] font-semibold' : 'text-white/60'
               }`}>
               {s}
@@ -276,11 +276,11 @@ export default function Home() {
           ))}
           <div className="flex gap-4 px-3 pt-2 mt-1 border-t border-white/10">
             <a href="https://www.linkedin.com/in/riyan-maknojia/" target="_blank" rel="noopener noreferrer"
-              className="font-mono text-xs text-white/60">LinkedIn ↗</a>
+              className="font-mono text-sm font-bold text-white/60">LinkedIn ↗</a>
             <a href="https://github.com/RiyanMak" target="_blank" rel="noopener noreferrer"
-              className="font-mono text-xs text-white/60">GitHub ↗</a>
+              className="font-mono text-sm font-bold text-white/60">GitHub ↗</a>
             <a href="/resume.pdf" target="_blank" rel="noopener noreferrer"
-              className="font-mono text-xs text-[#C97B6E]">Resume ↗</a>
+              className="font-mono text-sm font-bold text-[#C97B6E]">Resume ↗</a>
           </div>
         </div>
       )}
